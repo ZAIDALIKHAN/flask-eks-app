@@ -1,11 +1,22 @@
+# Terraform
 .terraform/
 *.tfstate
 *.tfstate.backup
 *.tfvars
-.terraform.lock.hcl
+# Note: .terraform.lock.hcl should be committed
+
+# Sensitive files
+jenkins-key.pem
+*.pem
+
+# Python
 __pycache__/
 *.pyc
 .env
 venv/
+
+# Docker
 *.tar
+
+# OS
 .DS_Store
