@@ -12,7 +12,7 @@ app:
 
 serviceAccount:
   name: "flask-app-sa"
-  roleArn: ""   # Injected via --set in Jenkins pipeline
+  roleArn: ""
 
 service:
   type: ClusterIP
@@ -40,10 +40,10 @@ autoscaling:
 
 livenessProbe:
   path: /health/live
-  initialDelaySeconds: 15
-  periodSeconds: 20
+  initialDelaySeconds: 60
+  periodSeconds: 30
 
 readinessProbe:
   path: /health/ready
-  initialDelaySeconds: 10
-  periodSeconds: 10
+  initialDelaySeconds: 30
+  periodSeconds: 15
