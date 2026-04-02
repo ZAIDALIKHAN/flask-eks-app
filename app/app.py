@@ -44,7 +44,6 @@ def create_app(test_db_url=None):
         }
 
     db.init_app(app)
-
     with app.app_context():
         db.create_all()
 

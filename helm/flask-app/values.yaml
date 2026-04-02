@@ -1,0 +1,49 @@
+replicaCount: 2
+
+image:
+  repository: 708037417213.dkr.ecr.us-east-1.amazonaws.com/flask-eks/flask-app
+  tag: "v1.0.0"
+  pullPolicy: IfNotPresent
+
+app:
+  secretName: "flask-eks/db-credentials"
+  awsRegion: "us-east-1"
+  port: 5000
+
+serviceAccount:
+  name: "flask-app-sa"
+  roleArn: ""   # Injected via --set in Jenkins pipeline
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 5000
+
+ingress:
+  enabled: true
+  className: "alb"
+  host: "flask-app.example.com"
+
+resources:
+  requests:
+    cpu: "100m"
+    memory: "128Mi"
+  limits:
+    cpu: "500m"
+    memory: "256Mi"
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 70
+
+livenessProbe:
+  path: /health/live
+  initialDelaySeconds: 15
+  periodSeconds: 20
+
+readinessProbe:
+  path: /health/ready
+  initialDelaySeconds: 10
+  periodSeconds: 10
