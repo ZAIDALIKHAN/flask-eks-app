@@ -1,0 +1,21 @@
+# Terraform
+terraform/
+*.tfstate
+*.tfvars
+*.pem
+
+# Python
+__pycache__/
+*.pyc
+.env
+venv/
+app/tests/
+
+# Git
+.git/
+.gitignore
+
+# Misc
+*.tar
+.DS_Store
+README.md

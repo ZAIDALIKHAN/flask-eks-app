@@ -2,9 +2,10 @@ import os
 import json
 import logging
 import boto3
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, g
 from pythonjsonlogger import jsonlogger
 from models import db, Book
+import time
 
 logger = logging.getLogger()
 handler = logging.StreamHandler()
@@ -46,6 +47,21 @@ def create_app(test_db_url=None):
     db.init_app(app)
     with app.app_context():
         db.create_all()
+
+    @app.before_request
+    def start_timer():
+        g.start = time.time()
+
+    @app.after_request
+    def log_request(response):
+        duration = round((time.time() - g.start) * 1000, 2)
+        logger.info("request", extra={
+            "method":   request.method,
+            "path":     request.path,
+            "status":   response.status_code,
+            "duration": duration,
+        })
+        return response
 
     @app.route("/health/live")
     def liveness():
