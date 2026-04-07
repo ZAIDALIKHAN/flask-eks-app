@@ -67,7 +67,7 @@ data "aws_iam_policy_document" "flask_app_assume" {
     condition {
       test     = "StringEquals"
       variable = "${replace(aws_iam_openid_connect_provider.eks.url, "https://", "")}:sub"
-      values   = ["system:serviceaccount:default:flask-app-sa"]
+      values   = ["system:serviceaccount:flask-app:flask-app-sa"]
     }
   }
 }

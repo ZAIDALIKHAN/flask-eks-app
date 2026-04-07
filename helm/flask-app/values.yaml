@@ -2,8 +2,8 @@ replicaCount: 2
 
 image:
   repository: 708037417213.dkr.ecr.us-east-1.amazonaws.com/flask-eks/flask-app
-  tag: "v1.0.0"
-  pullPolicy: IfNotPresent
+  tag: "latest"
+  pullPolicy: Always   
 
 app:
   secretName: "flask-eks/db-credentials"
@@ -12,7 +12,7 @@ app:
 
 serviceAccount:
   name: "flask-app-sa"
-  roleArn: ""
+  roleArn: "arn:aws:iam::672830962317:role/flask-eks-flask-app-role"
 
 service:
   type: ClusterIP
