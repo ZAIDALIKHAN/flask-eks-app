@@ -182,7 +182,7 @@ resource "aws_cloudwatch_dashboard" "main" {
         properties = {
           title  = "Flask App Logs"
           region = var.aws_region
-          query  = "SOURCE '/eks/${var.project_name}/flask-app' | fields @timestamp, @message | sort @timestamp desc | limit 50"
+          query  = "SOURCE '/aws/containerinsights/${var.project_name}-cluster/application' | fields @timestamp, @message | sort @timestamp desc | limit 50"
           view   = "table"
         }
       }
