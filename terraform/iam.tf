@@ -137,10 +137,13 @@ resource "aws_iam_role" "lbc" {
 }
 
 # AWS managed policy for LBC
-resource "aws_iam_policy" "lbc" {
-  name = "${var.project_name}-lbc-policy"
+data "http" "lbc_iam_policy" {
+  url = "https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/main/docs/install/iam_policy.json"
+}
 
-  policy = file("${path.module}/lbc-iam-policy.json")
+resource "aws_iam_policy" "lbc" {
+  name   = "${var.project}-lbc-policy"
+  policy = data.http.lbc_iam_policy.response_body
 }
 
 resource "aws_iam_role_policy_attachment" "lbc" {

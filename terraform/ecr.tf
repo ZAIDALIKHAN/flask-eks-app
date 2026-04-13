@@ -1,6 +1,7 @@
 resource "aws_ecr_repository" "flask_app" {
   name                 = "${var.project_name}/flask-app"
   image_tag_mutability = "MUTABLE"
+  force_delete         = true
 
   # Enable image scanning on every push
   image_scanning_configuration {
